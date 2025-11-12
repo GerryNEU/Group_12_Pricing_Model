@@ -1,0 +1,74 @@
+# =========================
+# Build output
+# =========================
+build/
+dist/
+out/
+target/
+bin/
+.gradle/
+.nb-gradle/
+
+# Compiled source
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Log files
+*.log
+
+# =========================
+# IDE-specific
+# =========================
+# NetBeans
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode/
+
+# =========================
+# OS generated files
+# =========================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# =========================
+# Temporary and misc files
+# =========================
+*.tmp
+*.swp
+*.swo
+*.bak
+*.properties~
+
+# =========================
+# Optional: Environment / config files
+# =========================
+# Uncomment if you keep secrets locally
+# .env
+# local.properties

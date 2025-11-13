@@ -40,9 +40,11 @@ public class CustomerDirectory {
                 return sp;
             }
         }
-            return null; //not found after going through the whole list
-         }
-        public CustomersReport generatCustomerPerformanceReport(){
+        return null; //not found after going through the whole list
+    }
+    
+    
+    public CustomersReport generatCustomerPerformanceReport(){
         CustomersReport customersreport = new CustomersReport();
     
         for(CustomerProfile cp: customerlist){
@@ -51,5 +53,9 @@ public class CustomerDirectory {
             customersreport.addCustomerSummary(cs);
         }
         return customersreport; 
-    } 
+    }
+    
+    public ArrayList<CustomerProfile> getCustomerlist() {
+        return customerlist;      
+    }
 }

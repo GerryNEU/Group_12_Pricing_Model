@@ -71,7 +71,7 @@ class ConfigureABusiness {
         uad.newUserAccount(marketingProfile, "marketing", "marketing"); // User: marketing, Pass: marketing
                 
         // --- 2. Generate Suppliers and Products ---
-        // Requirement: 50 Suppliers, 50 Products each (Total 2500 products) [cite: 3225-3226]        
+        // Requirement: 50 Suppliers, 50 Products each (Total 2500 products)       
         
          for (int i = 0; i < 50; i++) {
             String supplierName = faker.company().name(); // Use Faker for supplier name
@@ -90,7 +90,13 @@ class ConfigureABusiness {
             }
         }
        
-        
+        // --- 3. Generate Customers ---
+        // Requirement: 300 Customers
+        for (int i = 0; i < 300; i++) {
+            String customerName = faker.name().fullName(); // Use Faker for customer name
+            Person person = personDirectory.newPerson(customerName);
+            customerDirectory.newCustomerProfile(person);
+        }
         return business;
 
     }

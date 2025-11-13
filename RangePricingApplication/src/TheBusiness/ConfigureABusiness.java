@@ -48,23 +48,29 @@ class ConfigureABusiness {
 
     static Business initialize() {
         Business business = new Business("Xerox");
+        Faker faker = new Faker();        
         Random random = new Random();
 
-// Create Persons
-        PersonDirectory persondirectory = business.getPersonDirectory();
-// person representing sales organization        
+        // Get directories from the business object
+        PersonDirectory personDirectory = business.getPersonDirectory();
+        UserAccountDirectory uad = business.getUserAccountDirectory();
+        CustomerDirectory customerDirectory = business.getCustomerDirectory();
+        SupplierDirectory supplierDirectory = business.getSupplierDirectory();
+        MasterOrderList masterOrderList = business.getMasterOrderList();
+        
+        // person representing sales organization        
         Person xeroxsalesperson001 = persondirectory.newPerson("Xerox sales");
         Person xeroxmarketingperson001 = persondirectory.newPerson("Xerox marketing");
         Person xeroxadminperson001 = persondirectory.newPerson("Xerox admin");
 
-// Create person objects to represent customer organizations. 
+        // Create person objects to represent customer organizations. 
         Person person005 = persondirectory.newPerson("Dell");
         Person person006 = persondirectory.newPerson("Microsoft");
         Person person007 = persondirectory.newPerson("Google");
         Person person008 = persondirectory.newPerson("JP Morgan");
         Person person009 = persondirectory.newPerson("State street"); //we use this as customer
 
-// Create Customers
+        // Create Customers
         CustomerDirectory customedirectory = business.getCustomerDirectory();
         CustomerProfile customerprofile1 = customedirectory.newCustomerProfile(person005);
         CustomerProfile customerprofile2 = customedirectory.newCustomerProfile(person006);
@@ -72,17 +78,17 @@ class ConfigureABusiness {
         CustomerProfile customerprofile4 = customedirectory.newCustomerProfile(person008);
         CustomerProfile customerprofile5 = customedirectory.newCustomerProfile(person009);
 
-// Create Sales people
+        // Create Sales people
         SalesPersonDirectory salespersondirectory = business.getSalesPersonDirectory();
         SalesPersonProfile salespersonprofile = salespersondirectory.newSalesPersonProfile(xeroxsalesperson001);
 
-// Create Marketing people
+        // Create Marketing people
         MarketingPersonDirectory marketingpersondirectory = business.getMarketingPersonDirectory();
         MarketingPersonProfile marketingpersonprofile0 = marketingpersondirectory.newMarketingPersonProfile(xeroxmarketingperson001);
 
-// Create Admins to manage the business
-//        EmployeeDirectory employeedirectory = business.getEmployeeDirectory();
-//        EmployeeProfile employeeprofile0 = employeedirectory.newEmployeeProfile(xeroxadminperson001);
+        // Create Admins to manage the business
+        //        EmployeeDirectory employeedirectory = business.getEmployeeDirectory();
+        //        EmployeeProfile employeeprofile0 = employeedirectory.newEmployeeProfile(xeroxadminperson001);
         SupplierDirectory suplierdirectory = business.getSupplierDirectory();
 
         Supplier supplier1 = suplierdirectory.newSupplier("Lenovo");
@@ -108,13 +114,13 @@ class ConfigureABusiness {
         Product products2p7 = productcatalog.newProduct("Premier Printer 300", 322000, 470000, 736500);
         Product products2p8 = productcatalog.newProduct("Color Photocopier 500", 350000, 580000, 780000);
 
-// Create User accounts that link to specific profiles
+        // Create User accounts that link to specific profiles
         UserAccountDirectory uadirectory = business.getUserAccountDirectory();
         UserAccount ua1 = uadirectory.newUserAccount(salespersonprofile, "Sales", "XXXX"); /// order products for one of the customers and performed by a sales person
         UserAccount ua2 = uadirectory.newUserAccount(marketingpersonprofile0, "Marketing", "XXXX"); /// order products for one of the customers and performed by a sales person
-//        UserAccount ua3 = uadirectory.newUserAccount(employeeprofile0, "Admin", "XXXX"); /// order products for one of the customers and performed by a sales person
+        //UserAccount ua3 = uadirectory.newUserAccount(employeeprofile0, "Admin", "XXXX"); /// order products for one of the customers and performed by a sales person
 
-// Process Orders on behalf of sales person and customer
+        // Process Orders on behalf of sales person and customer
         MasterOrderList masterorderlist = business.getMasterOrderList();
         Order order1 = masterorderlist.newOrder(customerprofile4, salespersonprofile);
         OrderItem oi1 = order1.newOrderItem(products1p1, 18000, 1);
@@ -179,18 +185,18 @@ class ConfigureABusiness {
     static Business initializeMarkets() {
         Business business = new Business("Xerox");
 
-// Create Persons
+        // Create Persons
         PersonDirectory persondirectory = business.getPersonDirectory();
-// person representing sales organization        
+        // person representing sales organization        
         Person xeroxsalesperson001 = persondirectory.newPerson("Xerox sales");
         Person xeroxmarketingperson001 = persondirectory.newPerson("Xerox marketing");
 
-// Create Customers
+        // Create Customers
         CustomerDirectory customedirectory = business.getCustomerDirectory();
         CustomerProfile customerprofile1
                 = customedirectory.newCustomerProfile(xeroxsalesperson001);
 
-// Create Sales people
+        // Create Sales people
         SalesPersonDirectory salespersondirectory = business.getSalesPersonDirectory();
         SalesPersonProfile salespersonprofile = salespersondirectory.newSalesPersonProfile(xeroxsalesperson001);
 

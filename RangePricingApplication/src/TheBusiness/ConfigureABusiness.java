@@ -5,6 +5,11 @@
  */
 package TheBusiness;
 
+
+import java.util.Random;
+import com.github.javafaker.Faker;
+
+
 import MarketingManagement.MarketingPersonDirectory;
 import MarketingManagement.MarketingPersonProfile;
 import TheBusiness.Business.Business;
@@ -43,6 +48,7 @@ class ConfigureABusiness {
 
     static Business initialize() {
         Business business = new Business("Xerox");
+        Random random = new Random();
 
 // Create Persons
         PersonDirectory persondirectory = business.getPersonDirectory();

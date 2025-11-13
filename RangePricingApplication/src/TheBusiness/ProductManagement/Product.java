@@ -17,8 +17,10 @@ public class Product {
     private int floorPrice;
     private int ceilingPrice;
     private int targetPrice;
-    ArrayList<OrderItem> orderitems;
-        public Product( int fp, int cp, int tp) {
+    ArrayList<OrderItem> orderitems; // A list of all order items where this product was sold
+
+    
+    public Product( int fp, int cp, int tp) {
 
         floorPrice = fp;
         ceilingPrice = cp;
@@ -26,6 +28,7 @@ public class Product {
         orderitems = new ArrayList();
         
     }
+    
     public Product(String n, int fp, int cp, int tp) {
         name = n;
         floorPrice = fp;
@@ -33,16 +36,20 @@ public class Product {
         targetPrice = tp;
         orderitems = new ArrayList();
     }
-        public Product updateProduct(int fp, int cp, int tp) {
+    
+    public Product updateProduct(int fp, int cp, int tp) {
         floorPrice = fp;
         ceilingPrice = cp;
         targetPrice = tp;
         return this; //returns itself
     }
+    
     public int getTargetPrice() {return targetPrice;}
+    
     public void addOrderItem(OrderItem oi){     
         orderitems.add(oi);
     }
+    
     //Number of item sales above target 
     public int getNumberOfProductSalesAboveTarget(){
         int sum = 0;
@@ -51,15 +58,27 @@ public class Product {
         }
         return sum;
     }
+    
+    // Analyzes all sales of this product and counts how many were sold BELOW target price
     public int getNumberOfProductSalesBelowTarget(){
         int sum = 0;
         for (OrderItem oi: orderitems){
             if(oi.isActualBelowTarget()==true) sum = sum +1;
         }
         return sum;
+    }
+
+    // Helper to get total quantity sold for reporting
+    public int getTotalQuantitySold() {
+        int sum = 0;
+        for (OrderItem oi : orderitems) {
+            sum += oi.getQuantity();
+        }
+        return sum;
     }    
     
-        public boolean isProductAlwaysAboveTarget(){
+    // Checks if this product *always* sold above its target (a top performer)
+    public boolean isProductAlwaysAboveTarget(){
         
         for (OrderItem oi: orderitems){
             if(oi.isActualAboveTarget()==false) return false; //
@@ -71,23 +90,26 @@ public class Product {
     // is $500 above the expected target. If the actual is $1800 then the lose will be $200
     // Add all these difference to get the total including wins and loses
     
-        public int getOrderPricePerformance() {
+    public int getOrderPricePerformance() {
         int sum = 0;
         for (OrderItem oi : orderitems) {
             sum = sum + oi.calculatePricePerformance();     //positive and negative values       
         }
         return sum;
     }
-        public int getSalesVolume() {
+        
+    public int getSalesVolume() {
         int sum = 0;
         for (OrderItem oi : orderitems) {
             sum = sum + oi.getOrderItemTotal();     //positive and negative values       
         }
         return sum;
     }
+    
     public void setName(String n){
         name = n;
     }
+    
     @Override
     public String toString(){
         return name;
@@ -99,4 +121,14 @@ public class Product {
         return ceilingPrice;
     }
 
+    public void setTargetPrice(int newTargetPrice) {
+        // Add validation to ensure target is within floor/ceiling if needed
+        if (newTargetPrice >= floorPrice && newTargetPrice <= ceilingPrice) {
+            this.targetPrice = newTargetPrice;
+        } else if (newTargetPrice < floorPrice) {
+            this.targetPrice = floorPrice;
+        } else {
+            this.targetPrice = ceilingPrice;
+        }
+    }
 }

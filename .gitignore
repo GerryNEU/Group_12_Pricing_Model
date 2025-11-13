@@ -71,3 +71,5 @@ $RECYCLE.BIN/
 # Uncomment if you keep secrets locally
 # .env
 # local.properties
+./xml
+.properties

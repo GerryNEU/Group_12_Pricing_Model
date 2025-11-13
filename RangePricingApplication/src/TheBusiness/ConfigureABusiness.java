@@ -39,6 +39,7 @@ import TheBusiness.Supplier.Supplier;
 import TheBusiness.Supplier.SupplierDirectory;
 import TheBusiness.UserAccountManagement.UserAccount;
 import TheBusiness.UserAccountManagement.UserAccountDirectory;
+import java.util.ArrayList;
 
 /**
  *
@@ -97,8 +98,49 @@ class ConfigureABusiness {
             Person person = personDirectory.newPerson(customerName);
             customerDirectory.newCustomerProfile(person);
         }
-        return business;
+        
+        // --- 4. Simulate Order History (Market Data) ---
+        // Requirement: 1-3 Orders per Customer, 1-10 Items per Order       
+        
+        // Get all suppliers and customers we just created
+        ArrayList<Supplier> allSuppliers = supplierDirectory.getSuplierList();
+        ArrayList<CustomerProfile> allCustomers = customerDirectory.getCustomerlist();   
+        
+        for (CustomerProfile customer : allCustomers) {
+            int orderCount = 1 + random.nextInt(3); // Generates 1, 2, or 3 orders
 
+            for (int o = 0; o < orderCount; o++) {
+                // Create an order and assign it to our default salesperson (salesProfile)
+                Order order = masterOrderList.newOrder(customer, salesProfile);
+
+                int itemCount = 1 + random.nextInt(10); // 1 to 10 items per order
+                for (int item = 0; item < itemCount; item++) {
+                    
+                    // Pick a random product from a random supplier
+                    Supplier randomSupplier = allSuppliers.get(random.nextInt(allSuppliers.size()));
+                    Product randomProduct = randomSupplier.getProductCatalog().getProductList().get(random.nextInt(randomSupplier.getProductCatalog().getProductList().size()));
+
+                    // Requirement: Varying actual prices
+                    // This simulates market behavior. Price is randomized between floor and ceiling.
+                    int actualPrice = 0;
+                    if (randomProduct.getCeilingPrice() > randomProduct.getFloorPrice()) {
+                         actualPrice = randomProduct.getFloorPrice() + 
+                                       random.nextInt(randomProduct.getCeilingPrice() - randomProduct.getFloorPrice() + 1); // +1 to make ceiling inclusive
+                    } else {
+                         actualPrice = randomProduct.getTargetPrice(); // Failsafe if prices are bad
+                    }
+                    
+                    int quantity = 1 + random.nextInt(5); // Random quantity (1-5)
+                    
+                    // Create the order item, which links back to the product
+                    order.newOrderItem(randomProduct, actualPrice, quantity);
+                }
+                order.Submit(); // Mark order as "Submitted" to simulate a completed sale
+            }
+        }
+        
+        System.out.println("Data Generation Complete: " + supplierDirectory.getSuplierList().size() + " suppliers, " + customerDirectory.getCustomerlist().size() + " customers.");
+        return business;
     }
 
     static Business initializeMarkets() {

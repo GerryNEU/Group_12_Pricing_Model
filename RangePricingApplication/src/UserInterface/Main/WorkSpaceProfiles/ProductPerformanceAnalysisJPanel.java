@@ -32,6 +32,43 @@ public class ProductPerformanceAnalysisJPanel extends javax.swing.JPanel {
         this.business = bz;
         this.CardSequencePanel = jp;
         populateTable();
+        
+        
+        DefaultTableModel model = new DefaultTableModel(
+            new Object [][] {}, // No data initially
+            new String [] {
+                "Product Name", "Supplier", "Floor", "Ceiling", "Target", "Avg. Actual Price", "Total Qty Sold", "Avg. Margin vs Target", "Total Profit/Loss", "Freq. Above / Below"
+            }
+        ) {
+            // Define column classes
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class,
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class,
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, // This is the fix
+                java.lang.String.class
+            };
+            
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false; // All cells are non-editable
+            }
+        };
+        
+                // Set the new, correct model on the table
+        tblProductPerformance.setModel(model);
+        
+        // Add the sorter *after* setting the new model
+        sorter = new TableRowSorter<>(model);
+        tblProductPerformance.setRowSorter(sorter);
+        
+        // *** END: FIX FOR NUMERIC SORTING ***
+
+        populateTable();
     }
 
     /**
@@ -141,12 +178,6 @@ public class ProductPerformanceAnalysisJPanel extends javax.swing.JPanel {
     private void populateTable() {
         DefaultTableModel model = (DefaultTableModel) tblProductPerformance.getModel();
         model.setRowCount(0); // Clear existing table data
-
-        // Add a sorter to make the table columns clickable for sorting
-        if (sorter == null) {
-            sorter = new TableRowSorter<>(model);
-            tblProductPerformance.setRowSorter(sorter);
-        }
         
         // Loop through all suppliers
         for (Supplier supplier : business.getSupplierDirectory().getSuplierList()) {

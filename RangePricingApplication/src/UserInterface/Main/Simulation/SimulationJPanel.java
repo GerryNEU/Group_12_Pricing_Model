@@ -40,29 +40,29 @@ public class SimulationJPanel extends javax.swing.JPanel {
        }
      
       private void customInit() {
-        // 设置初始状态
-        txtCurrentRevenue.setText("$0");
-        txtNewRevenue.setText("$0");
-        txtImpactPercentage.setText("0.00%");
+        // Set initial status with labels
+        txtCurrentRevenue.setText("CurrentRevenue: $0");
+        txtNewRevenue.setText("NewRevenue: $0");
+        txtImpactPercentage.setText("Impact Percentage: 0.00%");
         
-        // 设置字体
+        // Set fonts
         txtCurrentRevenue.setFont(new Font("Arial", Font.BOLD, 14));
         txtNewRevenue.setFont(new Font("Arial", Font.BOLD, 14));
         txtImpactPercentage.setFont(new Font("Arial", Font.BOLD, 14));
         
-        // 设置颜色
+        // Set colors
         txtCurrentRevenue.setForeground(Color.BLUE);
-        txtNewRevenue.setForeground(new Color(0, 128, 0)); // 绿色
+        txtNewRevenue.setForeground(new Color(0, 128, 0)); // green
         
-        // 设置文本区域
+        // Set text area
         jTextArea1.setFont(new Font("Monospaced", Font.PLAIN, 12));
         jTextArea1.setEditable(false);
         
-        // 设置进度条
+        // Set progress bar
         progressBar.setStringPainted(true);
         progressBar.setValue(0);
         
-        // 添加按钮事件监听器
+        // Add button event listeners
         btnRunSimulation.addActionListener(e -> runSimulation());
         btnOptimizeProfit.addActionListener(e -> optimizeProfit());
         btnClear.addActionListener(e -> clearResults());
@@ -71,35 +71,35 @@ public class SimulationJPanel extends javax.swing.JPanel {
       
        private void runSimulation() {
         if (isRunning) {
-            JOptionPane.showMessageDialog(this, "模拟正在运行中，请稍候...");
+            JOptionPane.showMessageDialog(this, "Simulation is running, please wait...");
             return;
         }
         
-        // 使用SwingWorker在后台运行
+        // Use SwingWorker to run in background
         SwingWorker<SimulationResult, String> worker = new SwingWorker<SimulationResult, String>() {
             @Override
             protected SimulationResult doInBackground() throws Exception {
                 isRunning = true;
                 setButtonsEnabled(false);
                 
-                // 更新状态
+                // Update status
                 SwingUtilities.invokeLater(() -> {
                     lblStatusReady.setText("Status: Running Simulation...");
                     progressBar.setIndeterminate(true);
                 });
                 
-                publish("正在运行模拟...\n");
+                publish("Running simulation...\n");
                 publish("=====================================\n");
                 
-                // 运行模拟
+                // Run simulation
                 SimulationResult result = simulationEngine.runSimulation();
                 
-                // 模拟详细输出
-                publish(String.format("当前收入: $%,d\n", result.revenueBeforeAdjustment));
-                publish(String.format("当前利润: $%,d\n", result.profitBeforeAdjustment));
-                publish(String.format("调整了 %d 个产品的价格\n", result.productsAdjusted));
-                publish(String.format("新收入: $%,d\n", result.revenueAfterAdjustment));
-                publish(String.format("影响: %.2f%%\n", result.impactPercentage));
+                // Simulation detail output
+                publish(String.format("Current Revenue: $%,d\n", result.revenueBeforeAdjustment));
+                publish(String.format("Current Profit: $%,d\n", result.profitBeforeAdjustment));
+                publish(String.format("Products Adjusted: %d\n", result.productsAdjusted));
+                publish(String.format("New Revenue: $%,d\n", result.revenueAfterAdjustment));
+                publish(String.format("Impact: %.2f%%\n", result.impactPercentage));
                 
                 return result;
             }
@@ -109,7 +109,7 @@ public class SimulationJPanel extends javax.swing.JPanel {
                 for (String chunk : chunks) {
                     jTextArea1.append(chunk);
                 }
-                // 自动滚动到底部
+                // Auto scroll to bottom
                 jTextArea1.setCaretPosition(jTextArea1.getDocument().getLength());
             }
             
@@ -121,10 +121,10 @@ public class SimulationJPanel extends javax.swing.JPanel {
                     
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(SimulationJPanel.this, 
-                        "模拟运行失败: " + e.getMessage(), 
-                        "错误", 
+                        "Simulation failed: " + e.getMessage(), 
+                        "Error", 
                         JOptionPane.ERROR_MESSAGE);
-                    jTextArea1.append("\n错误: " + e.getMessage() + "\n");
+                    jTextArea1.append("\nError: " + e.getMessage() + "\n");
                 } finally {
                     isRunning = false;
                     setButtonsEnabled(true);
@@ -140,27 +140,27 @@ public class SimulationJPanel extends javax.swing.JPanel {
        
        private void optimizeProfit() {
         if (isRunning) {
-            JOptionPane.showMessageDialog(this, "优化正在运行中，请稍候...");
+            JOptionPane.showMessageDialog(this, "Optimization is running, please wait...");
             return;
         }
         
-        // 使用SwingWorker在后台运行
+        // Use SwingWorker to run in background
         SwingWorker<OptimizationResult, String> worker = new SwingWorker<OptimizationResult, String>() {
             @Override
             protected OptimizationResult doInBackground() throws Exception {
                 isRunning = true;
                 setButtonsEnabled(false);
                 
-                // 更新状态
+                // Update status
                 SwingUtilities.invokeLater(() -> {
                     lblStatusReady.setText("Status: Optimizing...");
                     progressBar.setValue(0);
                 });
                 
-                publish("\n开始利润优化...\n");
+                publish("\nStarting profit optimization...\n");
                 publish("=====================================\n");
                 
-                // 创建一个自定义的优化器用于更新进度
+                // Create custom optimizer for progress updates
                 OptimizationResult result = new OptimizationResult();
                 SimulationResult initialSim = simulationEngine.runSimulation();
                 
@@ -172,23 +172,23 @@ public class SimulationJPanel extends javax.swing.JPanel {
                 result.initialProfitMargin = lastProfitMargin;
                 result.addIteration(0, lastProfitMargin, initialSim.revenueAfterAdjustment);
                 
-                publish(String.format("初始利润率: %.2f%%\n", lastProfitMargin));
+                publish(String.format("Initial Profit Margin: %.2f%%\n", lastProfitMargin));
                 
-                // 迭代优化
+                // Iterative optimization
                 final int MAX_ITERATIONS = 10;
                 final double CONVERGENCE_THRESHOLD = 0.01;
                 
                 for (int i = 1; i <= MAX_ITERATIONS; i++) {
-                    // 更新进度条
+                    // Update progress bar
                     final int progress = i * 100 / MAX_ITERATIONS;
                     SwingUtilities.invokeLater(() -> progressBar.setValue(progress));
                     
-                    publish(String.format("\n--- 优化迭代 %d ---\n", i));
+                    publish(String.format("\n--- Optimization Iteration %d ---\n", i));
                     
-                    // 运行模拟
+                    // Run simulation
                     SimulationResult simResult = simulationEngine.runSimulation();
                     
-                    // 计算新的利润率
+                    // Calculate new profit margin
                     double currentProfitMargin = calculateProfitMargin(
                         simResult.profitAfterAdjustment,
                         simResult.revenueAfterAdjustment
@@ -196,21 +196,21 @@ public class SimulationJPanel extends javax.swing.JPanel {
                     
                     result.addIteration(i, currentProfitMargin, simResult.revenueAfterAdjustment);
                     
-                    // 计算改善程度
+                    // Calculate improvement
                     double improvement = Math.abs(currentProfitMargin - lastProfitMargin);
-                    publish(String.format("当前利润率: %.2f%%\n", currentProfitMargin));
-                    publish(String.format("改善幅度: %.2f%%\n", improvement));
+                    publish(String.format("Current Profit Margin: %.2f%%\n", currentProfitMargin));
+                    publish(String.format("Improvement: %.2f%%\n", improvement));
                     
-                    // 检查是否收敛
+                    // Check convergence
                     if (improvement < CONVERGENCE_THRESHOLD) {
-                        publish("✓ 优化收敛，达到最优状态\n");
+                        publish("✓ Optimization converged, reached optimal state\n");
                         result.converged = true;
                         break;
                     }
                     
                     lastProfitMargin = currentProfitMargin;
                     
-                    // 模拟处理时间
+                    // Simulate processing time
                     Thread.sleep(500);
                 }
                 
@@ -225,7 +225,7 @@ public class SimulationJPanel extends javax.swing.JPanel {
                 for (String chunk : chunks) {
                     jTextArea1.append(chunk);
                 }
-                // 自动滚动到底部
+                // Auto scroll to bottom
                 jTextArea1.setCaretPosition(jTextArea1.getDocument().getLength());
             }
             
@@ -237,10 +237,10 @@ public class SimulationJPanel extends javax.swing.JPanel {
                     
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(SimulationJPanel.this, 
-                        "优化运行失败: " + e.getMessage(), 
-                        "错误", 
+                        "Optimization failed: " + e.getMessage(), 
+                        "Error", 
                         JOptionPane.ERROR_MESSAGE);
-                    jTextArea1.append("\n错误: " + e.getMessage() + "\n");
+                    jTextArea1.append("\nError: " + e.getMessage() + "\n");
                 } finally {
                     isRunning = false;
                     setButtonsEnabled(true);
@@ -259,94 +259,94 @@ public class SimulationJPanel extends javax.swing.JPanel {
     }
     
     /**
-     * 显示模拟结果
+     * Display simulation results
      */
     private void displaySimulationResult(SimulationResult result) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         
-        // 更新状态标签
-        txtCurrentRevenue.setText(String.format("$%,d", result.revenueBeforeAdjustment));
-        txtNewRevenue.setText(String.format("$%,d", result.revenueAfterAdjustment));
+        // Update status labels - keep labels in the display
+        txtCurrentRevenue.setText(String.format("CurrentRevenue: $%,d", result.revenueBeforeAdjustment));
+        txtNewRevenue.setText(String.format("NewRevenue: $%,d", result.revenueAfterAdjustment));
         
-        String impactText = String.format("%.2f%%", result.impactPercentage);
+        String impactText = String.format("Impact Percentage: %.2f%%", result.impactPercentage);
         txtImpactPercentage.setText(impactText);
         
-        // 设置颜色
+        // Set colors
         if (result.impactPercentage > 0) {
-            txtImpactPercentage.setForeground(new Color(0, 128, 0)); // 绿色
+            txtImpactPercentage.setForeground(new Color(0, 128, 0)); // green
         } else if (result.impactPercentage < 0) {
             txtImpactPercentage.setForeground(Color.RED);
         } else {
             txtImpactPercentage.setForeground(Color.BLACK);
         }
         
-        // 添加详细结果到文本区域
-        jTextArea1.append("\n=== 模拟完成 ===\n");
-        jTextArea1.append("时间: " + sdf.format(result.simulationTime) + "\n");
-        jTextArea1.append("调整产品数: " + result.productsAdjusted + "\n");
-        jTextArea1.append("收入变化: $" + String.format("%,d", result.revenueBeforeAdjustment) + 
+        // Add detailed results to text area
+        jTextArea1.append("\n=== Simulation Complete ===\n");
+        jTextArea1.append("Time: " + sdf.format(result.simulationTime) + "\n");
+        jTextArea1.append("Products Adjusted: " + result.productsAdjusted + "\n");
+        jTextArea1.append("Revenue Change: $" + String.format("%,d", result.revenueBeforeAdjustment) + 
                          " → $" + String.format("%,d", result.revenueAfterAdjustment) + "\n");
-        jTextArea1.append("利润变化: $" + String.format("%,d", result.profitBeforeAdjustment) + 
+        jTextArea1.append("Profit Change: $" + String.format("%,d", result.profitBeforeAdjustment) + 
                          " → $" + String.format("%,d", result.profitAfterAdjustment) + "\n");
-        jTextArea1.append("影响: " + String.format("%.2f%%", result.impactPercentage) + "\n");
+        jTextArea1.append("Impact: " + String.format("%.2f%%", result.impactPercentage) + "\n");
         
-        // 评估性能
+        // Evaluate performance
         String performance = profitOptimizer.evaluatePerformance();
-        jTextArea1.append("性能评估: " + performance + "\n");
+        jTextArea1.append("Performance Evaluation: " + performance + "\n");
         jTextArea1.append("=====================================\n\n");
         
-        // 滚动到底部
+        // Scroll to bottom
         jTextArea1.setCaretPosition(jTextArea1.getDocument().getLength());
     }
     
     /**
-     * 显示优化结果
+     * Display optimization results
      */
     private void displayOptimizationResult(OptimizationResult result) {
-        jTextArea1.append("\n=== 优化完成 ===\n");
-        jTextArea1.append("总迭代次数: " + result.totalIterations + "\n");
-        jTextArea1.append("初始利润率: " + String.format("%.2f%%", result.initialProfitMargin) + "\n");
-        jTextArea1.append("最终利润率: " + String.format("%.2f%%", result.finalProfitMargin) + "\n");
-        jTextArea1.append("利润率提升: " + String.format("%.2f%%", 
+        jTextArea1.append("\n=== Optimization Complete ===\n");
+        jTextArea1.append("Total Iterations: " + result.totalIterations + "\n");
+        jTextArea1.append("Initial Profit Margin: " + String.format("%.2f%%", result.initialProfitMargin) + "\n");
+        jTextArea1.append("Final Profit Margin: " + String.format("%.2f%%", result.finalProfitMargin) + "\n");
+        jTextArea1.append("Profit Margin Improvement: " + String.format("%.2f%%", 
             result.finalProfitMargin - result.initialProfitMargin) + "\n");
-        jTextArea1.append("是否收敛: " + (result.converged ? "是" : "否") + "\n");
+        jTextArea1.append("Converged: " + (result.converged ? "Yes" : "No") + "\n");
         
-        // 显示建议
+        // Display recommendations
         if (result.finalProfitMargin < 10) {
-            jTextArea1.append("\n⚠️ 建议: 利润率仍然较低，建议进一步分析产品结构\n");
+            jTextArea1.append("\n⚠️ Recommendation: Profit margin is still low, suggest further analysis of product structure\n");
         } else if (result.finalProfitMargin < 20) {
-            jTextArea1.append("\n✓ 建议: 利润率有所改善，继续监控\n");
+            jTextArea1.append("\n✓ Recommendation: Profit margin has improved, continue monitoring\n");
         } else {
-            jTextArea1.append("\n✅ 建议: 利润率表现良好！\n");
+            jTextArea1.append("\n✅ Recommendation: Profit margin performing well!\n");
         }
         
         jTextArea1.append("=====================================\n\n");
         
-        // 滚动到底部
+        // Scroll to bottom
         jTextArea1.setCaretPosition(jTextArea1.getDocument().getLength());
         
-        // 如果有显著改善，更新收入显示
+        // Update revenue display if significant improvement
         if (result.iterationHistory.size() > 0) {
             IterationRecord lastIteration = result.iterationHistory.get(result.iterationHistory.size() - 1);
-            txtNewRevenue.setText(String.format("$%,d", lastIteration.revenue));
+            txtNewRevenue.setText(String.format("NewRevenue: $%,d", lastIteration.revenue));
         }
     }
     
     /**
-     * 清除结果
+     * Clear results
      */
     private void clearResults() {
         jTextArea1.setText("");
-        txtCurrentRevenue.setText("$0");
-        txtNewRevenue.setText("$0");
-        txtImpactPercentage.setText("0.00%");
+        txtCurrentRevenue.setText("CurrentRevenue: $0");
+        txtNewRevenue.setText("NewRevenue: $0");
+        txtImpactPercentage.setText("Impact Percentage: 0.00%");
         txtImpactPercentage.setForeground(Color.BLACK);
         progressBar.setValue(0);
         lblStatusReady.setText("Status: Ready");
     }
     
     /**
-     * 设置按钮启用状态
+     * Set button enable status
      */
     private void setButtonsEnabled(boolean enabled) {
         btnRunSimulation.setEnabled(enabled);
@@ -377,6 +377,8 @@ public class SimulationJPanel extends javax.swing.JPanel {
         jTextArea1 = new javax.swing.JTextArea();
         lblStatusReady = new javax.swing.JLabel();
         progressBar = new javax.swing.JProgressBar();
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         lblSimulationAndOptimizationConsole.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         lblSimulationAndOptimizationConsole.setText("Simulation & Optimization Console");
@@ -416,6 +418,8 @@ public class SimulationJPanel extends javax.swing.JPanel {
                     .addComponent(btnClear))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         txtCurrentRevenue.setText("CurrentRevenue");
 
@@ -458,6 +462,7 @@ public class SimulationJPanel extends javax.swing.JPanel {
         jTextArea1.setRows(5);
         ResultsScrollPane.setViewportView(jTextArea1);
 
+        lblStatusReady.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         lblStatusReady.setText("Status: Ready ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -465,18 +470,16 @@ public class SimulationJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(ResultsScrollPane)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(ResultsScrollPane)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(101, 101, 101)
                         .addComponent(lblStatusReady)
-                        .addGap(61, 61, 61)
-                        .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(55, 55, 55)
+                        .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -486,13 +489,13 @@ public class SimulationJPanel extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(ResultsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ResultsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblStatusReady, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(54, 54, 54))
+                .addGap(38, 38, 38))
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -27,45 +27,45 @@ public class SimulationEngine {
     }
     
     /**
-     * 运行一次完整的模拟
+     * Run a complete simulation
      */
     public SimulationResult runSimulation() {
-        System.out.println("=== 开始运行模拟 ===");
+        System.out.println("=== Starting Simulation ===");
         SimulationResult result = new SimulationResult();
         
-        // 步骤1: 计算调整前的指标
+        // Step 1: Calculate metrics before adjustment
         result.revenueBeforeAdjustment = calculateTotalRevenue();
         result.profitBeforeAdjustment = calculateTotalProfit();
-        System.out.println("当前收入: $" + result.revenueBeforeAdjustment);
-        System.out.println("当前利润: $" + result.profitBeforeAdjustment);
+        System.out.println("Current revenue: $" + result.revenueBeforeAdjustment);
+        System.out.println("Current profit: $" + result.profitBeforeAdjustment);
         
-        // 步骤2: 执行价格调整
+        // Step 2: Execute price adjustments
         int adjustedCount = performPriceAdjustments();
         result.productsAdjusted = adjustedCount;
-        System.out.println("调整了 " + adjustedCount + " 个产品的价格");
+        System.out.println("Adjusted prices for " + adjustedCount + " products");
         
-        // 步骤3: 计算调整后的指标
+        // Step 3: Calculate metrics after adjustment
         result.revenueAfterAdjustment = calculateTotalRevenue();
         result.profitAfterAdjustment = calculateTotalProfit();
         
-        // 步骤4: 计算影响
+        // Step 4: Calculate impact
         if (result.revenueBeforeAdjustment > 0) {
             result.impactPercentage = 
                 ((double)(result.revenueAfterAdjustment - result.revenueBeforeAdjustment) 
                 / result.revenueBeforeAdjustment) * 100;
         }
         
-        System.out.println("新收入: $" + result.revenueAfterAdjustment);
-        System.out.println("影响: " + String.format("%.2f%%", result.impactPercentage));
+        System.out.println("New revenue: $" + result.revenueAfterAdjustment);
+        System.out.println("Impact: " + String.format("%.2f%%", result.impactPercentage));
         
-        // 保存历史记录
+        // Save historical record
         simulationHistory.add(result);
         
         return result;
     }
     
     /**
-     * 计算总收入
+     * Calculate total revenue
      */
     private int calculateTotalRevenue() {
         int totalRevenue = 0;
@@ -83,7 +83,7 @@ public class SimulationEngine {
     }
     
     /**
-     * 计算总利润
+     * Calculate total profit
      */
     private int calculateTotalProfit() {
         int totalProfit = 0;
@@ -101,7 +101,7 @@ public class SimulationEngine {
     }
     
     /**
-     * 执行价格调整（临时实现）
+     * Execute price adjustments
      */
     private int performPriceAdjustments() {
         int adjustedCount = 0;
@@ -116,20 +116,20 @@ public class SimulationEngine {
                 int currentTarget = product.getTargetPrice();
                 int newTarget = currentTarget;
                 
-                // 判断是否需要调整
+                // Determine if adjustment is needed
                 if (summary.getNumberBelowTarget() > summary.getNumberAboveTarget()) {
-                    // 销售不佳，降低价格
+                    // Poor sales, lower price
                     newTarget = (int)(currentTarget * 0.95);
                     newTarget = Math.max(newTarget, product.getFloorPrice());
                     adjusted = true;
                 } else if (summary.getNumberAboveTarget() > summary.getNumberBelowTarget() * 2) {
-                    // 销售很好，提高价格
+                    // Good sales, raise price
                     newTarget = (int)(currentTarget * 1.05);
                     newTarget = Math.min(newTarget, product.getCeilingPrice());
                     adjusted = true;
                 }
                 
-                // 更新价格
+                // Update price
                 if (adjusted && newTarget != currentTarget) {
                     product.updateProduct(
                         product.getFloorPrice(),
@@ -145,7 +145,7 @@ public class SimulationEngine {
     }
     
     /**
-     * 获取最高收入影响的产品
+     * Get products with highest revenue impact
      */
     public List<Product> getTopImpactProducts(int count) {
         List<Product> allProducts = new ArrayList<>();
@@ -155,7 +155,7 @@ public class SimulationEngine {
             allProducts.addAll(supplier.getProductCatalog().getProductList());
         }
         
-        // 按收入排序
+        // Sort by revenue
         allProducts.sort((p1, p2) -> {
             ProductSummary s1 = new ProductSummary(p1);
             ProductSummary s2 = new ProductSummary(p2);

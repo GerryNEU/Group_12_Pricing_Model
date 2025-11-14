@@ -5,8 +5,9 @@
  */
 package TheBusiness;
 
+import javax.swing.SwingUtilities;
 import TheBusiness.Business.Business;
-
+import SimulationAndReport.MainUI;
 /**
  *
  * @author kal bugrara
@@ -17,9 +18,11 @@ public class RangePricingApplication {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-       Business business = ConfigureABusiness.initializeMarkets();
-              
+        Business business = ConfigureABusiness.initialize();
+
+        SwingUtilities.invokeLater(() -> {
+            new MainUI(business).setVisible(true);
+        });
     }
 
 }

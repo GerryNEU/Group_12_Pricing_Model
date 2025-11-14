@@ -4,17 +4,34 @@
  */
 package UserInterface.Main.WorkSpaceProfiles;
 
+import TheBusiness.Business.Business;
+import TheBusiness.ProductManagement.Product;
+import TheBusiness.ProductManagement.ProductSummary;
+import TheBusiness.Supplier.Supplier;
+import TheBusiness.ProductManagement.Product;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
+
 /**
  *
  * @author gerrysu
  */
 public class ProductPerformanceAnalysisJPanel extends javax.swing.JPanel {
-
+    
+    private JPanel CardSequencePanel;
+    private Business business;
+    private TableRowSorter<DefaultTableModel> sorter;
+  
     /**
      * Creates new form ProductPerformanceAnalysisJPanel
      */
-    public ProductPerformanceAnalysisJPanel() {
-        initComponents();
+    public ProductPerformanceAnalysisJPanel(Business bz, JPanel jp) {
+        initComponents();        
+        this.business = bz;
+        this.CardSequencePanel = jp;
+        populateTable();
     }
 
     /**
@@ -26,19 +43,148 @@ public class ProductPerformanceAnalysisJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProductPerformance = new javax.swing.JTable();
+        btnBack = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
+        lblTitle = new javax.swing.JLabel();
+
+        tblProductPerformance.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Product Name", "Supplier", "Floor", "Ceiling", "Target", "Avg. Actual Price", "Total Qty Sold", "Avg. Margin vs Target", "Total Profit/Loss", "Freq. Above / Below"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblProductPerformance);
+
+        btnBack.setText("<< Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
+        btnRefresh.setText("Refresh Data");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
+        lblTitle.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        lblTitle.setText("Product Performance Analysis");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnBack)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnRefresh)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(464, 464, 464)
+                .addComponent(lblTitle)
+                .addContainerGap(564, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(40, Short.MAX_VALUE)
+                .addComponent(lblTitle)
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRefresh)
+                    .addComponent(btnBack))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        CardSequencePanel.remove(this);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);        
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+        populateTable();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnRefresh;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JTable tblProductPerformance;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) tblProductPerformance.getModel();
+        model.setRowCount(0); // Clear existing table data
+
+        // Add a sorter to make the table columns clickable for sorting
+        if (sorter == null) {
+            sorter = new TableRowSorter<>(model);
+            tblProductPerformance.setRowSorter(sorter);
+        }
+        
+        // Loop through all suppliers
+        for (Supplier supplier : business.getSupplierDirectory().getSuplierList()) {
+            // Loop through all products from that supplier
+            for (Product product : supplier.getProductCatalog().getProductList()) {
+                
+                // Use the ProductSummary class (which you updated) to get calculated metrics
+                ProductSummary summary = new ProductSummary(product);
+
+                int salesAbove = summary.getNumberAboveTarget();
+                int salesBelow = summary.getNumberBelowTarget();
+                int totalQuantity = summary.getTotalQuantitySold();
+                int salesRevenue = summary.getSalesRevenues();
+                
+                // Calculate average actual price, handle division by zero
+                int avgActualPrice = (totalQuantity == 0) ? 0 : salesRevenue / totalQuantity;
+                
+                // This is the (Actual - Target) * Quantity sum. A key metric.
+                int pricePerformance = summary.getProductPricePerformance();
+                
+                // Calculate average margin per unit
+                int avgMargin = (totalQuantity == 0) ? 0 : pricePerformance / totalQuantity;
+
+
+                Object[] row = new Object[10];
+                row[0] = product; // Uses product.toString() which is the name
+                row[1] = supplier; // Uses supplier.toString() which is the name
+                row[2] = product.getFloorPrice();
+                row[3] = product.getCeilingPrice();
+                row[4] = product.getTargetPrice();
+                row[5] = avgActualPrice;
+                row[6] = totalQuantity;
+                row[7] = avgMargin; // Profit/Loss vs Target per unit
+                row[8] = pricePerformance; // Total Profit/Loss vs Target
+                row[9] = salesAbove + " / " + salesBelow; // Freq Above / Freq Below
+
+                model.addRow(row);
+            }
+        }
+    }
 }

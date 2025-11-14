@@ -3,29 +3,22 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/UserAccountManagement/UserAccount.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/MarketModel/MarketChannelAssignment.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/UserInterface/Main/WorkSpaceProfiles/SalesPersonWorkAreaJPanel.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/ProductManagement/ProductCatalog.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/OrderManagement/MasterOrderList.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/OrderManagement/OrderSummary.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/MarketModel/SolutionOfferCatalog.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/ConfigureABusiness.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/ProductManagement/ProductsReport.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/UserInterface/Main/WorkSpaceProfiles/OrderManagement/ProcessOrder.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/ProductManagement/ProductSummary.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/ProductManagement/Product.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/RangePricingApplication.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/UserInterface/Main/WorkSpaceProfiles/BusinessManagerWorkAreaJPanel.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/Business/Business.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/SolutionOrders/SolutionOrder.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/UserAccountManagement/UserAccountDirectory.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/MarketModel/MarketChannelComboCatalog.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/Supplier/Supplier.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/OrderManagement/Order.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/UserInterface/Main/ConfigureABusiness.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/TheBusiness/CustomerManagement/CustomerDirectory.java</file>
-            <file>file:/C:/Users/kal%20bugrara/Documents/NetBeansProjects/RangePricingApplication/src/UserInterface/Main/PricingMainFrame.java</file>
+            <file>file:/Users/hug0_/Documents/GitHub/Group_12_Pricing_Model/RangePricingApplication/src/UserInterface/ManageTheBusiness/ManageTheBusinessJPanel.java</file>
+            <file>file:/Users/hug0_/Documents/GitHub/Group_12_Pricing_Model/RangePricingApplication/src/UserInterface/Main/PricingMainFrame.java</file>
+            <file>file:/Users/hug0_/Documents/GitHub/Group_12_Pricing_Model/RangePricingApplication/src/UserInterface/Main/Simulation/SimulationJPanel.java</file>
+            <file>file:/Users/hug0_/Documents/GitHub/Group_12_Pricing_Model/RangePricingApplication/src/UserInterface/Main/Simulation/SimulationModel.java</file>
+            <file>file:/Users/hug0_/Documents/GitHub/Group_12_Pricing_Model/RangePricingApplication/src/UserInterface/Main/WorkSpaceProfiles/BusinessManagerWorkAreaJPanel.java</file>
+            <file>file:/Users/hug0_/Documents/GitHub/Group_12_Pricing_Model/RangePricingApplication/src/UserInterface/Main/ConfigureABusiness.java</file>
+            <file>file:/Users/hug0_/Documents/GitHub/Group_12_Pricing_Model/RangePricingApplication/src/UserInterface/Main/Simulation/ProfitOptimizer.java</file>
+            <file>file:/Users/hug0_/Documents/GitHub/Group_12_Pricing_Model/RangePricingApplication/src/UserInterface/Main/WorkSpaceProfiles/OrderManagement/ManageProductPerformanceDetail1.java</file>
+            <file>file:/Users/hug0_/Documents/GitHub/Group_12_Pricing_Model/RangePricingApplication/src/UserInterface/Main/WorkSpaceProfiles/MarketingManagerWorkAreaJPanel1.java</file>
+            <file>file:/Users/hug0_/Documents/GitHub/Group_12_Pricing_Model/RangePricingApplication/src/UserInterface/Main/WorkSpaceProfiles/OrderManagement/ManageSalesPersonOrders.java</file>
+            <file>file:/Users/hug0_/Documents/GitHub/Group_12_Pricing_Model/RangePricingApplication/src/UserInterface/Main/WorkSpaceProfiles/OrderManagement/ProcessOrder.java</file>
+            <file>file:/Users/hug0_/Documents/GitHub/Group_12_Pricing_Model/RangePricingApplication/src/UserInterface/ManageTheBusiness/ManageBusinessDetail1.java</file>
+            <file>file:/Users/hug0_/Documents/GitHub/Group_12_Pricing_Model/RangePricingApplication/src/UserInterface/Main/WorkSpaceProfiles/SalesPersonWorkAreaJPanel.java</file>
+            <file>file:/Users/hug0_/Documents/GitHub/Group_12_Pricing_Model/RangePricingApplication/src/UserInterface/ProductManagement/ManageProductPerformanceDetail.java</file>
+            <file>file:/Users/hug0_/Documents/GitHub/Group_12_Pricing_Model/RangePricingApplication/src/UserInterface/ProductManagement/ManageSuppliersJPanel.java</file>
+            <file>file:/Users/hug0_/Documents/GitHub/Group_12_Pricing_Model/RangePricingApplication/src/UserInterface/Main/Simulation/SimulationEngine.java</file>
         </group>
     </open-files>
 </project-private>

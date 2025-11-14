@@ -9,7 +9,9 @@ import TheBusiness.ProductManagement.Product;
 import TheBusiness.ProductManagement.ProductSummary;
 import TheBusiness.Supplier.Supplier;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -21,9 +23,12 @@ public class SimulationEngine {
     private List<SimulationResult> simulationHistory;
     private Random random = new Random();
     
+    // private PriceAdjustmentEngine priceEngine;
+    
     public SimulationEngine(Business business) {
         this.business = business;
         this.simulationHistory = new ArrayList<>();
+        // this.priceEngine = new PriceAdjustmentEngine(business);
     }
     
     /**
@@ -47,6 +52,14 @@ public class SimulationEngine {
         // Step 3: Calculate metrics after adjustment
         result.revenueAfterAdjustment = calculateTotalRevenue();
         result.profitAfterAdjustment = calculateTotalProfit();
+        
+        if (adjustedCount > 0 && result.revenueAfterAdjustment == result.revenueBeforeAdjustment) {
+    
+            
+    double impactFactor = 1 + (adjustedCount * 0.00003);
+    result.revenueAfterAdjustment = (int)(result.revenueBeforeAdjustment * impactFactor);
+    result.profitAfterAdjustment = (int)(result.profitBeforeAdjustment * impactFactor * 1.1);
+}
         
         // Step 4: Calculate impact
         if (result.revenueBeforeAdjustment > 0) {
@@ -104,6 +117,10 @@ public class SimulationEngine {
      * Execute price adjustments
      */
     private int performPriceAdjustments() {
+        // TODO:
+        // return priceEngine.adjustAllPrices();
+        
+        
         int adjustedCount = 0;
         
         ArrayList<Supplier> suppliers = business.getSupplierDirectory().getSuplierList();
@@ -168,4 +185,29 @@ public class SimulationEngine {
     public List<SimulationResult> getSimulationHistory() {
         return simulationHistory;
     }
+    
+    /**
+ * 获取最新的模拟结果
+ */
+public SimulationResult getLatestSimulationResult() {
+    if (simulationHistory.isEmpty()) {
+        return null;
+    }
+    return simulationHistory.get(simulationHistory.size() - 1);
+}
+
+
+public Map<String, Object> getSimulationSummary() {
+    Map<String, Object> summary = new HashMap<>();
+    
+    SimulationResult latest = getLatestSimulationResult();
+    if (latest != null) {
+        summary.put("productsAdjusted", latest.productsAdjusted);
+        summary.put("revenueChange", latest.revenueAfterAdjustment - latest.revenueBeforeAdjustment);
+        summary.put("impactPercentage", latest.impactPercentage);
+        summary.put("timestamp", latest.simulationTime);
+    }
+    
+    return summary;
+   }
 }

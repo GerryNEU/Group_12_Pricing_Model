@@ -8,6 +8,7 @@ import TheBusiness.Business.Business;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.SimpleDateFormat;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
@@ -297,38 +298,64 @@ public class SimulationJPanel extends javax.swing.JPanel {
         
         // Scroll to bottom
         jTextArea1.setCaretPosition(jTextArea1.getDocument().getLength());
+        
+         Map<String, Object> summary = simulationEngine.getSimulationSummary();
+    if (summary != null && !summary.isEmpty()) {
+        jTextArea1.append("\n=== Summary Data ===\n");
+        jTextArea1.append("Products Adjusted: " + summary.get("productsAdjusted") + "\n");
+        jTextArea1.append("Revenue Change: $" + String.format("%,d", summary.get("revenueChange")) + "\n");
+        jTextArea1.append("Impact: " + String.format("%.2f%%", summary.get("impactPercentage")) + "\n");
+        jTextArea1.append("Timestamp: " + summary.get("timestamp") + "\n");
+        jTextArea1.append("=====================================\n");
+       }
+
+           
     }
-    
+   
     /**
      * Display optimization results
      */
     private void displayOptimizationResult(OptimizationResult result) {
-        jTextArea1.append("\n=== Optimization Complete ===\n");
-        jTextArea1.append("Total Iterations: " + result.totalIterations + "\n");
-        jTextArea1.append("Initial Profit Margin: " + String.format("%.2f%%", result.initialProfitMargin) + "\n");
-        jTextArea1.append("Final Profit Margin: " + String.format("%.2f%%", result.finalProfitMargin) + "\n");
-        jTextArea1.append("Profit Margin Improvement: " + String.format("%.2f%%", 
-            result.finalProfitMargin - result.initialProfitMargin) + "\n");
-        jTextArea1.append("Converged: " + (result.converged ? "Yes" : "No") + "\n");
+         jTextArea1.append("\n=== Optimization Complete ===\n");
+    jTextArea1.append("Total Iterations: " + result.totalIterations + "\n");
+    jTextArea1.append("Initial Profit Margin: " + String.format("%.2f%%", result.initialProfitMargin) + "\n");
+    jTextArea1.append("Final Profit Margin: " + String.format("%.2f%%", result.finalProfitMargin) + "\n");
+    jTextArea1.append("Profit Margin Improvement: " + String.format("%.2f%%", 
+        result.finalProfitMargin - result.initialProfitMargin) + "\n");
+    jTextArea1.append("Converged: " + (result.converged ? "Yes" : "No") + "\n");
         
         // Display recommendations
-        if (result.finalProfitMargin < 10) {
-            jTextArea1.append("\n⚠️ Recommendation: Profit margin is still low, suggest further analysis of product structure\n");
-        } else if (result.finalProfitMargin < 20) {
-            jTextArea1.append("\n✓ Recommendation: Profit margin has improved, continue monitoring\n");
-        } else {
-            jTextArea1.append("\n✅ Recommendation: Profit margin performing well!\n");
-        }
-        
-        jTextArea1.append("=====================================\n\n");
+          if (result.finalProfitMargin < 10) {
+        jTextArea1.append("\n⚠️ Recommendation: Profit margin is still low, suggest further analysis of product structure\n");
+    } else if (result.finalProfitMargin < 20) {
+        jTextArea1.append("\n✓ Recommendation: Profit margin has improved, continue monitoring\n");
+    } else {
+        jTextArea1.append("\n✅ Recommendation: Profit margin performing well!\n");
+    }
+    
+    jTextArea1.append("=====================================\n\n");
         
         // Scroll to bottom
         jTextArea1.setCaretPosition(jTextArea1.getDocument().getLength());
         
         // Update revenue display if significant improvement
-        if (result.iterationHistory.size() > 0) {
-            IterationRecord lastIteration = result.iterationHistory.get(result.iterationHistory.size() - 1);
-            txtNewRevenue.setText(String.format("NewRevenue: $%,d", lastIteration.revenue));
+         if (result.iterationHistory.size() > 0) {
+        IterationRecord lastIteration = result.iterationHistory.get(result.iterationHistory.size() - 1);
+        
+        
+        int currentRevenue = Integer.parseInt(txtCurrentRevenue.getText()
+            .replace("CurrentRevenue: $", "")
+            .replace(",", ""));
+        
+        
+        double revenueMultiplier = 1 + (result.finalProfitMargin - result.initialProfitMargin) / 100;
+        int optimizedRevenue = (int)(currentRevenue * revenueMultiplier);
+        
+        txtNewRevenue.setText(String.format("NewRevenue: $%,d", optimizedRevenue));
+        
+        
+        double newImpact = ((double)(optimizedRevenue - currentRevenue) / currentRevenue) * 100;
+        txtImpactPercentage.setText(String.format("Impact Percentage: %.2f%%", newImpact));
         }
     }
     
@@ -394,24 +421,24 @@ public class SimulationJPanel extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(137, 137, 137)
+                .addGap(93, 93, 93)
                 .addComponent(btnRunSimulation)
-                .addGap(148, 148, 148)
+                .addGap(170, 170, 170)
                 .addComponent(btnOptimizeProfit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
                 .addComponent(btnClear)
-                .addGap(111, 111, 111))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(119, 119, 119))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(293, 293, 293)
                 .addComponent(lblSimulationAndOptimizationConsole)
-                .addGap(298, 298, 298))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addGap(38, 38, 38)
                 .addComponent(lblSimulationAndOptimizationConsole)
-                .addGap(36, 36, 36)
+                .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnOptimizeProfit)
                     .addComponent(btnRunSimulation)
@@ -434,28 +461,28 @@ public class SimulationJPanel extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(151, 151, 151)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(101, 101, 101)
                 .addComponent(txtCurrentRevenue)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(184, 184, 184)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblStatus)
                     .addComponent(txtNewRevenue))
-                .addGap(218, 218, 218)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtImpactPercentage)
-                .addGap(70, 70, 70))
+                .addGap(118, 118, 118))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(19, 19, 19)
                 .addComponent(lblStatus)
-                .addGap(41, 41, 41)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNewRevenue)
                     .addComponent(txtCurrentRevenue)
                     .addComponent(txtImpactPercentage))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGap(32, 32, 32))
         );
 
         jTextArea1.setColumns(20);
@@ -478,20 +505,21 @@ public class SimulationJPanel extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblStatusReady)
-                        .addGap(55, 55, 55)
-                        .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(57, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ResultsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ResultsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblStatusReady, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))

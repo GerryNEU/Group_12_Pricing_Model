@@ -11,6 +11,7 @@
 package UserInterface.Main.WorkSpaceProfiles;
 
 import TheBusiness.Business.Business;
+import UserInterface.Main.Simulation.SimulationJPanel;
 import UserInterface.ManageTheBusiness.ManageTheBusinessJPanel;
 import UserInterface.ProductManagement.ManageSuppliersJPanel;
 import javax.swing.JPanel;
@@ -232,10 +233,11 @@ public class BusinessManagerWorkAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
 
         CardSequencePanel.removeAll();
-//        ManageIncidents aos = new  ManageIncidents(businessunit, CardSequencePanel);
-        // aos.setAgenda(businessunit.getRiskManagementAgenda());
-//        CardSequencePanel.add("RiskAgendaObjectives", aos);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+         SimulationJPanel simulationPanel = new SimulationJPanel(business);
+    CardSequencePanel.add("SimulationAndOptimization", simulationPanel);
+    
+    // 切换到新面板
+    ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 }//GEN-LAST:event_jButton11ActionPerformed
 
 

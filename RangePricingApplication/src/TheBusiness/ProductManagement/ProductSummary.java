@@ -16,6 +16,7 @@ public class ProductSummary {
     int numberofsalesabovetarget;
     int numberofsalesbelowtarget;
     int productpriceperformance; //total profit above target --could be negative too
+    int totalQuantitySold; // total number of units sold
     int acutalsalesvolume;
     int rank; // will be done later
 
@@ -26,25 +27,39 @@ public class ProductSummary {
         productpriceperformance = p.getOrderPricePerformance();
         acutalsalesvolume = p.getSalesVolume();
         numberofsalesbelowtarget = p.getNumberOfProductSalesBelowTarget();
+        totalQuantitySold = p.getTotalQuantitySold();
     }
 
+    public Product getSubjectProduct(){
+        return subjectproduct;
+    }
+
+    // Returns total revenue
     public int getSalesRevenues() {
         return acutalsalesvolume;
     }
+    
+    // Returns total units sold
+    public int getTotalQuantitySold() {
+        return totalQuantitySold;
+    }
 
+    // Returns count of sales ABOVE target
     public int getNumberAboveTarget() {
         return numberofsalesabovetarget;
     }
 
+    // Returns the total profit margin difference (can be negative)
     public int getProductPricePerformance() {
         return productpriceperformance;
     }
 
+    // Returns count of sales BELOW target
     public int getNumberBelowTarget() {
         return numberofsalesbelowtarget;
     }
 
     public boolean isProductAlwaysAboveTarget() {
-        return false; // to be implemented
+        return subjectproduct.isProductAlwaysAboveTarget();
     }
 }

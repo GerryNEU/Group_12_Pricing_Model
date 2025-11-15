@@ -64,7 +64,7 @@ public class PriceAdjustmentEngine {
     }
     
     
-//    // Function 3: Batch adjust prices up for all over-performing products.
+    // Function 3: Batch adjust prices up for all over-performing products.
     public static String adjustPricesUp(Business business) {
         StringBuilder log = new StringBuilder("--- Starting Price Increase for Over-performing Products ---\n");
         int count = 0;

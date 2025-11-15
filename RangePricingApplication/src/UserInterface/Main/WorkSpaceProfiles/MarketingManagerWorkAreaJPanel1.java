@@ -172,8 +172,6 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
 
     private void jButton6IdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6IdentifyEventsActionPerformed
         // TODO add your handling code here:
-        CardSequencePanel.removeAll();
-
         // Create an instance of your new panel
         PriceAdjustmentPanel adjustmentPanel = new PriceAdjustmentPanel(business, CardSequencePanel);
 

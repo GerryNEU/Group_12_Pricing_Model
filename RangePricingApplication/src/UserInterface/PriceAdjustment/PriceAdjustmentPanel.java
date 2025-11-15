@@ -114,9 +114,9 @@ private JPanel CardSequencePanel;
 
     private void btnAdjustDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdjustDownActionPerformed
         // TODO add your handling code here:
-        String log = PriceAdjustmentEngine.adjustPricesDown(business);
-        txtResults.setText(log);
-        txtResults.setCaretPosition(0); // Scroll to top
+//        String log = PriceAdjustmentEngine.adjustPricesDown(business);
+//        txtResults.setText(log);
+//        txtResults.setCaretPosition(0); // Scroll to top
     }//GEN-LAST:event_btnAdjustDownActionPerformed
 
     private void btnAdjustUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdjustUpActionPerformed

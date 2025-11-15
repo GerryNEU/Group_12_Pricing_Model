@@ -64,35 +64,35 @@ public class PriceAdjustmentEngine {
     }
     
     
-    // Function 3: Batch adjust prices up for all over-performing products.
-    public static String adjustPricesUp(Business business) {
-        StringBuilder log = new StringBuilder("--- Starting Price Increase for Over-performing Products ---\n");
-        int count = 0;
-        List<Product> allProducts = getAllProducts(business);
-
-        for (Product p : allProducts) {
-            int below = p.getNumberOfProductSalesBelowTarget();
-            int above = p.getNumberOfProductSalesAboveTarget();
-
-            // Rule: Sales above target > (Sales below target * 2)
-            if (above > (below * 2)) {
-                int oldPrice = p.getTargetPrice();
-                int newPrice = (int) (oldPrice * 1.05); // 5% increase
-                
-                // The setTargetPrice method in Product.java already handles floor/ceiling validation
-                p.setTargetPrice(newPrice);
-                
-                int finalPrice = p.getTargetPrice(); // Get the price after validation
-                if (oldPrice != finalPrice) {
-                    log.append(String.format("Product '%s' price adjusted from %d to %d\n", p.toString(), oldPrice, finalPrice));
-                    count++;
-                }
-            }
-        }
-        log.append(String.format("--- Finished: %d products were adjusted. ---\n", count));
-        return log.toString();
-    }
-    
+//    // Function 3: Batch adjust prices up for all over-performing products.
+//    public static String adjustPricesUp(Business business) {
+//        StringBuilder log = new StringBuilder("--- Starting Price Increase for Over-performing Products ---\n");
+//        int count = 0;
+//        List<Product> allProducts = getAllProducts(business);
+//
+//        for (Product p : allProducts) {
+//            int below = p.getNumberOfProductSalesBelowTarget();
+//            int above = p.getNumberOfProductSalesAboveTarget();
+//
+//            // Rule: Sales above target > (Sales below target * 2)
+//            if (above > (below * 2)) {
+//                int oldPrice = p.getTargetPrice();
+//                int newPrice = (int) (oldPrice * 1.05); // 5% increase
+//                
+//                // The setTargetPrice method in Product.java already handles floor/ceiling validation
+//                p.setTargetPrice(newPrice);
+//                
+//                int finalPrice = p.getTargetPrice(); // Get the price after validation
+//                if (oldPrice != finalPrice) {
+//                    log.append(String.format("Product '%s' price adjusted from %d to %d\n", p.toString(), oldPrice, finalPrice));
+//                    count++;
+//                }
+//            }
+//        }
+//        log.append(String.format("--- Finished: %d products were adjusted. ---\n", count));
+//        return log.toString();
+//    }
+//    
 }
 
 

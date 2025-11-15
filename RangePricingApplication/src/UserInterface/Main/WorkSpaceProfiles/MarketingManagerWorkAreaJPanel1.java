@@ -11,6 +11,7 @@
 package UserInterface.Main.WorkSpaceProfiles;
 
 import TheBusiness.Business.Business;
+import UserInterface.Main.Simulation.SimulationJPanel;
 import UserInterface.ManageTheBusiness.ManageTheBusinessJPanel;
 import UserInterface.ProductManagement.ManageSuppliersJPanel;
 import UserInterface.PriceAdjustment.PriceAdjustmentPanel;
@@ -172,6 +173,8 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
 
     private void jButton6IdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6IdentifyEventsActionPerformed
         // TODO add your handling code here:
+      
+
         // Create an instance of your new panel
         PriceAdjustmentPanel adjustmentPanel = new PriceAdjustmentPanel(business, CardSequencePanel);
 
@@ -182,10 +185,12 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
-
-        ProductPerformanceAnalysisJPanel analysisPanel = new ProductPerformanceAnalysisJPanel(business, CardSequencePanel);
-        CardSequencePanel.add("ProductPerformanceAnalysis", analysisPanel);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+    CardSequencePanel.removeAll();
+    SimulationJPanel simulationPanel = new SimulationJPanel(business);
+    CardSequencePanel.add("SimulationAndOptimization", simulationPanel);
+    
+    // 切换到新面板
+    ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 }//GEN-LAST:event_jButton11ActionPerformed
 
 

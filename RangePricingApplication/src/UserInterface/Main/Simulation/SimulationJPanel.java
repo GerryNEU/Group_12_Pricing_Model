@@ -5,6 +5,7 @@
 package UserInterface.Main.Simulation;
 
 import TheBusiness.Business.Business;
+import UserInterface.Main.WorkSpaceProfiles.MarketingManagerWorkAreaJPanel1;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -550,9 +551,7 @@ public class SimulationJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         
     CardLayout cardLayout = (CardLayout) cardSequencePanel.getLayout();
-   
-    cardLayout.show(cardSequencePanel, "MarketingManagerPanel");
-        
+    cardLayout.previous(cardSequencePanel); 
     }//GEN-LAST:event_btnBackActionPerformed
 
 

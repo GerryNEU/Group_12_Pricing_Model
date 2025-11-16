@@ -203,8 +203,8 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
-    CardSequencePanel.removeAll();
-    SimulationJPanel simulationPanel = new SimulationJPanel(business);
+   
+    SimulationJPanel simulationPanel = new SimulationJPanel(business,CardSequencePanel);
     CardSequencePanel.add("SimulationAndOptimization", simulationPanel);
     
     // 切换到新面板

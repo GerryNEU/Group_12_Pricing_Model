@@ -100,7 +100,7 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
         jButton11.setBackground(new java.awt.Color(102, 153, 255));
         jButton11.setFont(getFont());
         jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setText("Performance Reports");
+        jButton11.setText("Simulation Performance ");
         jButton11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton11.setMaximumSize(new java.awt.Dimension(200, 40));
         jButton11.setMinimumSize(new java.awt.Dimension(20, 20));

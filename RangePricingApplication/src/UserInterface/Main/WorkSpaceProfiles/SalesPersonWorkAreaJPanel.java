@@ -227,7 +227,7 @@ public class SalesPersonWorkAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
 
     CardSequencePanel.removeAll();
-    SimulationJPanel simulationPanel = new SimulationJPanel(business);
+    SimulationJPanel simulationPanel = new SimulationJPanel(business,CardSequencePanel);
     CardSequencePanel.add("SimulationAndOptimization", simulationPanel);
     
     ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);

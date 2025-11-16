@@ -11,8 +11,10 @@
 package UserInterface.Main.WorkSpaceProfiles;
 
 import TheBusiness.Business.Business;
+import UserInterface.Main.Simulation.SimulationJPanel;
 import UserInterface.ManageTheBusiness.ManageTheBusinessJPanel;
 import UserInterface.ProductManagement.ManageSuppliersJPanel;
+import UserInterface.PriceAdjustment.PriceAdjustmentPanel;
 import javax.swing.JPanel;
 
 /**
@@ -171,20 +173,24 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
 
     private void jButton6IdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6IdentifyEventsActionPerformed
         // TODO add your handling code here:
-        CardSequencePanel.removeAll();
-        //    IdentifyEventTypes iet= new IdentifyEventTypes(businessunit, CardSequencePanel);
+      
 
-        //    CardSequencePanel.add("IdentifyEventTypes", iet);
+        // Create an instance of your new panel
+        PriceAdjustmentPanel adjustmentPanel = new PriceAdjustmentPanel(business, CardSequencePanel);
+
+        // Add it to the CardLayout and show it
+        CardSequencePanel.add("PriceAdjustment", adjustmentPanel);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-        //((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
 }//GEN-LAST:event_jButton6IdentifyEventsActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
-
-        ProductPerformanceAnalysisJPanel analysisPanel = new ProductPerformanceAnalysisJPanel(business, CardSequencePanel);
-        CardSequencePanel.add("ProductPerformanceAnalysis", analysisPanel);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+    CardSequencePanel.removeAll();
+    SimulationJPanel simulationPanel = new SimulationJPanel(business);
+    CardSequencePanel.add("SimulationAndOptimization", simulationPanel);
+    
+    // 切换到新面板
+    ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 }//GEN-LAST:event_jButton11ActionPerformed
 
 

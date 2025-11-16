@@ -52,7 +52,7 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
         jButton6 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton12 = new javax.swing.JButton();
+        btnGenerateReports = new javax.swing.JButton();
 
         setForeground(new java.awt.Color(51, 51, 51));
 
@@ -115,17 +115,17 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("Marketing ");
 
-        jButton12.setBackground(new java.awt.Color(102, 153, 255));
-        jButton12.setFont(getFont());
-        jButton12.setForeground(new java.awt.Color(255, 255, 255));
-        jButton12.setText("Product Performance");
-        jButton12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton12.setMaximumSize(new java.awt.Dimension(200, 40));
-        jButton12.setMinimumSize(new java.awt.Dimension(20, 20));
-        jButton12.setPreferredSize(new java.awt.Dimension(240, 25));
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        btnGenerateReports.setBackground(new java.awt.Color(102, 153, 255));
+        btnGenerateReports.setFont(getFont());
+        btnGenerateReports.setForeground(new java.awt.Color(255, 255, 255));
+        btnGenerateReports.setText("Generate Reports");
+        btnGenerateReports.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnGenerateReports.setMaximumSize(new java.awt.Dimension(200, 40));
+        btnGenerateReports.setMinimumSize(new java.awt.Dimension(20, 20));
+        btnGenerateReports.setPreferredSize(new java.awt.Dimension(240, 25));
+        btnGenerateReports.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                btnGenerateReportsActionPerformed(evt);
             }
         });
 
@@ -146,10 +146,10 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
                                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(69, 69, 69)
-                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(67, 67, 67)
+                        .addComponent(btnGenerateReports, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(399, Short.MAX_VALUE))
+                .addContainerGap(401, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,7 +159,8 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
                 .addGap(76, 76, 76)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGenerateReports, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -207,20 +208,21 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
     SimulationJPanel simulationPanel = new SimulationJPanel(business,CardSequencePanel);
     CardSequencePanel.add("SimulationAndOptimization", simulationPanel);
     
-    // 切换到新面板
+   
     ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 }//GEN-LAST:event_jButton11ActionPerformed
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+    private void btnGenerateReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateReportsActionPerformed
         // TODO add your handling code here:
-        ProductPerformanceAnalysisJPanel iet = new ProductPerformanceAnalysisJPanel(business, CardSequencePanel);
-        
-        CardSequencePanel.add("ProductPerformanceAnalysis", iet);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-    }//GEN-LAST:event_jButton12ActionPerformed
+        SimulationAndReport.MainUI mainUI = new SimulationAndReport.MainUI(business);
+        mainUI.setVisible(true);
+        mainUI.setTitle("Simulation and Report Generation");
+        mainUI.setLocationRelativeTo(null); // Center the window
+    }//GEN-LAST:event_btnGenerateReportsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGenerateReports;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;

@@ -101,7 +101,7 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
         jButton11.setBackground(new java.awt.Color(102, 153, 255));
         jButton11.setFont(getFont());
         jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setText("Performance Reports");
+        jButton11.setText("Simulation Performance ");
         jButton11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton11.setMaximumSize(new java.awt.Dimension(200, 40));
         jButton11.setMinimumSize(new java.awt.Dimension(20, 20));
@@ -203,11 +203,12 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
-        CardSequencePanel.removeAll();
-        SimulationJPanel simulationPanel = new SimulationJPanel(business);
-        CardSequencePanel.add("SimulationAndOptimization", simulationPanel);
+   
+    SimulationJPanel simulationPanel = new SimulationJPanel(business,CardSequencePanel);
+    CardSequencePanel.add("SimulationAndOptimization", simulationPanel);
     
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+    // 切换到新面板
+    ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed

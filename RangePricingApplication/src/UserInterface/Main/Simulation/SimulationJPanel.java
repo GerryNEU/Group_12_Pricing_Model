@@ -550,8 +550,9 @@ public class SimulationJPanel extends javax.swing.JPanel {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
         
-    CardLayout cardLayout = (CardLayout) cardSequencePanel.getLayout();
-    cardLayout.previous(cardSequencePanel); 
+        cardSequencePanel.remove(this);
+        ((java.awt.CardLayout) cardSequencePanel.getLayout()).previous(cardSequencePanel);
+    
     }//GEN-LAST:event_btnBackActionPerformed
 
 

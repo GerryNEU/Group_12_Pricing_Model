@@ -26,14 +26,12 @@ public class MainUI extends javax.swing.JFrame {
     public MainUI(TheBusiness.Business.Business b) {
         this.business = b;
         initComponents();
-        chartHolder.setLayout(new java.awt.BorderLayout());
-        chartHolder.add(chartPanel, java.awt.BorderLayout.CENTER);
+
     }
     public MainUI() {
         this.business = null; 
         initComponents();
-        chartHolder.setLayout(new java.awt.BorderLayout());
-        chartHolder.add(chartPanel, java.awt.BorderLayout.CENTER);
+
     }
 
     /**
@@ -49,11 +47,8 @@ public class MainUI extends javax.swing.JFrame {
         tabTable = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProducts = new javax.swing.JTable();
-        tabChart = new javax.swing.JPanel();
-        chartHolder = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         btnBrowseProducts = new javax.swing.JButton();
-        btnRunSimulation = new javax.swing.JButton();
         btnGenerateReport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -89,47 +84,10 @@ public class MainUI extends javax.swing.JFrame {
 
         tabMain.addTab("Table", tabTable);
 
-        javax.swing.GroupLayout chartHolderLayout = new javax.swing.GroupLayout(chartHolder);
-        chartHolder.setLayout(chartHolderLayout);
-        chartHolderLayout.setHorizontalGroup(
-            chartHolderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 625, Short.MAX_VALUE)
-        );
-        chartHolderLayout.setVerticalGroup(
-            chartHolderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 364, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout tabChartLayout = new javax.swing.GroupLayout(tabChart);
-        tabChart.setLayout(tabChartLayout);
-        tabChartLayout.setHorizontalGroup(
-            tabChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tabChartLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(chartHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        tabChartLayout.setVerticalGroup(
-            tabChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tabChartLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(chartHolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-
-        tabMain.addTab("Chart", tabChart);
-
         btnBrowseProducts.setText("Browse Products");
         btnBrowseProducts.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBrowseProductsActionPerformed(evt);
-            }
-        });
-
-        btnRunSimulation.setText("Run Simulation");
-        btnRunSimulation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRunSimulationActionPerformed(evt);
             }
         });
 
@@ -147,9 +105,7 @@ public class MainUI extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(btnBrowseProducts)
-                .addGap(119, 119, 119)
-                .addComponent(btnRunSimulation)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 367, Short.MAX_VALUE)
                 .addComponent(btnGenerateReport)
                 .addGap(19, 19, 19))
         );
@@ -159,7 +115,6 @@ public class MainUI extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGenerateReport)
-                    .addComponent(btnRunSimulation)
                     .addComponent(btnBrowseProducts))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
@@ -199,48 +154,6 @@ public class MainUI extends javax.swing.JFrame {
         tblProducts.setModel(m);
         tabMain.setSelectedComponent(tabTable);
     }//GEN-LAST:event_btnBrowseProductsActionPerformed
-
-    private void btnRunSimulationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRunSimulationActionPerformed
-        // TODO add your handling code here:
-        SimulationEngine engine = new SimulationEngine(business);
-        lastResult = engine.runSimulation();
-
-        DefaultTableModel m = new DefaultTableModel(
-            new Object[]{"Product","Rev Before","Rev After","Δ","RateAbove"}, 0);
-        java.util.List<BarChartPanel.Item> list = new java.util.ArrayList<>();
-
-        for (Supplier s : business.getSupplierDirectory().getSuplierList()) {
-            for (Product p : s.getProductCatalog().getProductList()) {
-                double before = lastResult.revenueBefore.getOrDefault(p, 0.0);
-                double after  = lastResult.revenueAfter .getOrDefault(p, 0.0);
-                double delta  = after - before;
-                double rate   = lastResult.salesFreq.getOrDefault(p, new Frequency()).rateAbove();
-
-                m.addRow(new Object[]{p.toString(),
-                        String.format("%.2f", before),
-                        String.format("%.2f", after),
-                        String.format("%.2f", delta),
-                        String.format("%.2f", rate)});
-                list.add(new BarChartPanel.Item(p.toString(), delta));
-            }
-        }
-        m.addRow(new Object[]{"TOTAL",
-            String.format("%.2f", lastResult.totalBefore),
-            String.format("%.2f", lastResult.totalAfter),
-            String.format("%.2f", (lastResult.totalAfter - lastResult.totalBefore)),
-            ""});
-        tblProducts.setModel(m);
-
-        list.sort((a,b)->Double.compare(Math.abs(b.value), Math.abs(a.value)));
-        chartPanel.setData(list.size()>10 ? list.subList(0,10) : list);
-        tabMain.setSelectedComponent(tabChart);
-
-        if (lastResult.mostImpactProduct != null) {
-            JOptionPane.showMessageDialog(this,
-                "Most Impact: " + lastResult.mostImpactProduct.toString()
-                + " |Δ|=" + String.format("%.2f", lastResult.maxDelta));
-        }
-    }//GEN-LAST:event_btnRunSimulationActionPerformed
 
     private void btnGenerateReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateReportActionPerformed
         // TODO add your handling code here:
@@ -296,11 +209,8 @@ public class MainUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBrowseProducts;
     private javax.swing.JButton btnGenerateReport;
-    private javax.swing.JButton btnRunSimulation;
-    private javax.swing.JPanel chartHolder;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel tabChart;
     private javax.swing.JTabbedPane tabMain;
     private javax.swing.JPanel tabTable;
     private javax.swing.JTable tblProducts;

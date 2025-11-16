@@ -5,11 +5,14 @@
 package UserInterface.Main.Simulation;
 
 import TheBusiness.Business.Business;
+import UserInterface.Main.WorkSpaceProfiles.MarketingManagerWorkAreaJPanel1;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
@@ -21,6 +24,7 @@ public class SimulationJPanel extends javax.swing.JPanel {
     private Business business;
     private SimulationEngine simulationEngine;
     private ProfitOptimizer profitOptimizer;
+    private JPanel cardSequencePanel;
 
     
      private boolean isRunning = false;
@@ -31,8 +35,9 @@ public class SimulationJPanel extends javax.swing.JPanel {
         initComponents();
     }
     
-     public SimulationJPanel(Business business) {
+     public SimulationJPanel(Business business, JPanel cardPanel) {
         this.business = business;
+        this.cardSequencePanel = cardPanel;
         this.simulationEngine = new SimulationEngine(business);
         this.profitOptimizer = new ProfitOptimizer(business, simulationEngine);
         initComponents();
@@ -395,6 +400,7 @@ public class SimulationJPanel extends javax.swing.JPanel {
         btnRunSimulation = new javax.swing.JButton();
         btnOptimizeProfit = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         txtCurrentRevenue = new javax.swing.JLabel();
         txtNewRevenue = new javax.swing.JLabel();
@@ -416,6 +422,13 @@ public class SimulationJPanel extends javax.swing.JPanel {
 
         btnClear.setText("Clear");
 
+        btnBack.setText("<<Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -429,14 +442,21 @@ public class SimulationJPanel extends javax.swing.JPanel {
                 .addComponent(btnClear)
                 .addGap(119, 119, 119))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(293, 293, 293)
-                .addComponent(lblSimulationAndOptimizationConsole)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(293, 293, 293)
+                        .addComponent(lblSimulationAndOptimizationConsole))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnBack)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(9, 9, 9)
+                .addComponent(btnBack)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblSimulationAndOptimizationConsole)
                 .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -497,7 +517,7 @@ public class SimulationJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(ResultsScrollPane)
@@ -508,7 +528,7 @@ public class SimulationJPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(46, 46, 46)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -521,15 +541,23 @@ public class SimulationJPanel extends javax.swing.JPanel {
                 .addComponent(ResultsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblStatusReady, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(38, 38, 38))
+                    .addComponent(lblStatusReady)
+                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                .addGap(36, 36, 36))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        
+    CardLayout cardLayout = (CardLayout) cardSequencePanel.getLayout();
+    cardLayout.previous(cardSequencePanel); 
+    }//GEN-LAST:event_btnBackActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane ResultsScrollPane;
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnOptimizeProfit;
     private javax.swing.JButton btnRunSimulation;

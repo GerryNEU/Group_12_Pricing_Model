@@ -186,9 +186,6 @@ public class SimulationEngine {
         return simulationHistory;
     }
     
-    /**
- * 获取最新的模拟结果
- */
 public SimulationResult getLatestSimulationResult() {
     if (simulationHistory.isEmpty()) {
         return null;

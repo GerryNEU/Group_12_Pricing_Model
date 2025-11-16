@@ -101,7 +101,7 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
         jButton11.setBackground(new java.awt.Color(102, 153, 255));
         jButton11.setFont(getFont());
         jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setText("Performance Reports");
+        jButton11.setText("Simulation Performance ");
         jButton11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton11.setMaximumSize(new java.awt.Dimension(200, 40));
         jButton11.setMinimumSize(new java.awt.Dimension(20, 20));
@@ -164,7 +164,8 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(221, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -193,7 +194,6 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
     private void jButton6IdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6IdentifyEventsActionPerformed
         // TODO add your handling code here:
       
-
         // Create an instance of your new panel
         PriceAdjustmentPanel adjustmentPanel = new PriceAdjustmentPanel(business, CardSequencePanel);
 
@@ -204,8 +204,8 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
-    CardSequencePanel.removeAll();
-    SimulationJPanel simulationPanel = new SimulationJPanel(business);
+   
+    SimulationJPanel simulationPanel = new SimulationJPanel(business,CardSequencePanel);
     CardSequencePanel.add("SimulationAndOptimization", simulationPanel);
     
    
@@ -225,6 +225,7 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
     private javax.swing.JButton btnGenerateReports;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;

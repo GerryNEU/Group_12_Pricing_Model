@@ -205,7 +205,7 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
     CardSequencePanel.removeAll();
-    SimulationJPanel simulationPanel = new SimulationJPanel(business);
+    SimulationJPanel simulationPanel = new SimulationJPanel(business, CardSequencePanel);
     CardSequencePanel.add("SimulationAndOptimization", simulationPanel);
     
    
@@ -215,6 +215,7 @@ public class MarketingManagerWorkAreaJPanel1 extends javax.swing.JPanel {
     private void btnGenerateReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateReportsActionPerformed
         // TODO add your handling code here:
         SimulationAndReport.MainUI mainUI = new SimulationAndReport.MainUI(business);
+        mainUI.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         mainUI.setVisible(true);
         mainUI.setTitle("Simulation and Report Generation");
         mainUI.setLocationRelativeTo(null); // Center the window

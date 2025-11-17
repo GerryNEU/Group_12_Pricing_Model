@@ -28,6 +28,7 @@ public class MainUI extends javax.swing.JFrame {
         initComponents();
         chartHolder.setLayout(new java.awt.BorderLayout());
         chartHolder.add(chartPanel, java.awt.BorderLayout.CENTER);
+        tabMain.setEnabledAt(1, false);
     }
     public MainUI() {
         this.business = null; 
@@ -53,8 +54,8 @@ public class MainUI extends javax.swing.JFrame {
         chartHolder = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         btnBrowseProducts = new javax.swing.JButton();
-        btnRunSimulation = new javax.swing.JButton();
         btnGenerateReport = new javax.swing.JButton();
+        btnRunSimulation = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,19 +118,12 @@ public class MainUI extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        tabMain.addTab("Chart", tabChart);
+        tabMain.addTab("", tabChart);
 
         btnBrowseProducts.setText("Browse Products");
         btnBrowseProducts.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBrowseProductsActionPerformed(evt);
-            }
-        });
-
-        btnRunSimulation.setText("Run Simulation");
-        btnRunSimulation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRunSimulationActionPerformed(evt);
             }
         });
 
@@ -140,18 +134,25 @@ public class MainUI extends javax.swing.JFrame {
             }
         });
 
+        btnRunSimulation.setText("Run Simulation");
+        btnRunSimulation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRunSimulationActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addContainerGap()
                 .addComponent(btnBrowseProducts)
-                .addGap(119, 119, 119)
+                .addGap(129, 129, 129)
                 .addComponent(btnRunSimulation)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
                 .addComponent(btnGenerateReport)
-                .addGap(19, 19, 19))
+                .addGap(48, 48, 48))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,8 +160,8 @@ public class MainUI extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGenerateReport)
-                    .addComponent(btnRunSimulation)
-                    .addComponent(btnBrowseProducts))
+                    .addComponent(btnBrowseProducts)
+                    .addComponent(btnRunSimulation))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -173,7 +174,7 @@ public class MainUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tabMain, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,7 +207,7 @@ public class MainUI extends javax.swing.JFrame {
         lastResult = engine.runSimulation();
 
         DefaultTableModel m = new DefaultTableModel(
-            new Object[]{"Product","Rev Before","Rev After","Δ","RateAbove"}, 0);
+            new Object[]{"Success"}, 0);
         java.util.List<BarChartPanel.Item> list = new java.util.ArrayList<>();
 
         for (Supplier s : business.getSupplierDirectory().getSuplierList()) {
@@ -233,12 +234,11 @@ public class MainUI extends javax.swing.JFrame {
 
         list.sort((a,b)->Double.compare(Math.abs(b.value), Math.abs(a.value)));
         chartPanel.setData(list.size()>10 ? list.subList(0,10) : list);
-        tabMain.setSelectedComponent(tabChart);
+        tabMain.setSelectedComponent(tabTable);
 
         if (lastResult.mostImpactProduct != null) {
             JOptionPane.showMessageDialog(this,
-                "Most Impact: " + lastResult.mostImpactProduct.toString()
-                + " |Δ|=" + String.format("%.2f", lastResult.maxDelta));
+                "success " );
         }
     }//GEN-LAST:event_btnRunSimulationActionPerformed
 
